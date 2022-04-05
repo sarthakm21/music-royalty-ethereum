@@ -14,6 +14,7 @@ contract MusicLicense is ERC721, ERC721Enumerable, Ownable {
     constructor() ERC721("MusicLicense", "ML") {}
 
     function _baseURI() internal pure override returns (string memory) {
+        // TODO: metadata generation
         return "https://ipfs.io/..";
     }
 
@@ -25,6 +26,7 @@ contract MusicLicense is ERC721, ERC721Enumerable, Ownable {
     function buy(uint256 _tokenId) external payable {
         address seller = ownerOf(_tokenId);
         _transfer(seller, msg.sender, _tokenId);
+
     }
 
     // The following functions are overrides required by Solidity.
@@ -51,7 +53,8 @@ contract MusicRoyaltyContract {
     mapping(uint256 => Music) public musicDirectory;
     mapping(address => uint256) public balances; // Store current balances for each artist which can be claimed later
     mapping(string => string[]) public donators; // List of donators
-   
+    mapping(address => mapping(uint256 => uint256[])) public buyersToMusicLicenses; // mapping for a buyer's address to the music licenses tokenIds they possess
+    
     // So that some ether can be paid initially to cover gas costs.
     constructor() payable {
         // pass
@@ -105,7 +108,16 @@ contract MusicRoyaltyContract {
         }
         musicDirectory[index]._licensesCreated += num;
     }
- 
+    // returns the number of licenses available to be bought for a particular music
+    function numberOfLicensesLeft(uint256 _index) public view returns(uint256){
+        require(_index < count , "Music index not present");
+        return musicDirectory[_index]._licensesCreated - musicDirectory[_index]._licensesBought;
+    }
+    // return licenses tokenIds bought by the caller for a particular music index
+    function licensesBought(uint256 _index) public view returns (uint256[] memory) {
+        require(_index < count , "Music index not present");
+        return buyersToMusicLicenses[msg.sender][_index];
+    }
     // A event for user to know about the purchase
     event Purchase(
         address indexed _buyer,
@@ -121,6 +133,7 @@ contract MusicRoyaltyContract {
         // todo: transfer actual NFT
         MusicLicense license = MusicLicense(musicDirectory[index]._nftAddress);
         license.buy(uint256(musicDirectory[index]._licensesBought));
+        buyersToMusicLicenses[msg.sender][index].push(musicDirectory[index]._licensesBought);
         musicDirectory[index]._licensesBought += 1;
         // Calculate cuts and update balance.
         for (uint256 i=0; i<musicDirectory[index]._artistCuts.length; i++) {
@@ -129,7 +142,6 @@ contract MusicRoyaltyContract {
         // Shows the address of buyer and amount
         emit Purchase(msg.sender, msg.value);
    }
- 
     // Allows a user to donate to his favorite artist without any return.
     function donate(uint256 index, string memory Name) public payable {
         require(msg.value > 0, "Donated amount can't be zero or negative");
@@ -143,4 +155,5 @@ contract MusicRoyaltyContract {
         require(balances[msg.sender] > 0, "No amount to claim.");
         payable(msg.sender).transfer(balances[msg.sender]);
     }
+
 }
