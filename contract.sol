@@ -10,12 +10,15 @@ contract MusicLicense is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
+    string private _baseMusicURI;
 
-    constructor() ERC721("MusicLicense", "ML") {}
+    constructor(string memory name, string memory baseMusicURI) ERC721(name, "ML") {
+        _baseMusicURI = baseMusicURI;
+    }
 
-    function _baseURI() internal pure override returns (string memory) {
+    function _baseURI() internal view override returns (string memory) {
         // TODO: metadata generation
-        return "https://ipfs.io/..";
+        return _baseMusicURI;
     }
 
     function safeMint(address to) public {
@@ -70,6 +73,7 @@ contract MusicRoyaltyContract {
         address _artist; // Main artist
         address[] _artistAddresses; // All artists including other contributors
         uint256[] _artistCuts; // % royalty cut for each corresponding artist above. total % should be 100;
+        string _musicURI;
     }
  
  
@@ -77,7 +81,8 @@ contract MusicRoyaltyContract {
         string memory musicName,
         string memory artistName,
         address[] memory _artistAddresses,
-        uint256[] memory _artistCuts
+        uint256[] memory _artistCuts,
+        string memory musicURI
         ) public {
             require(_artistAddresses.length == _artistCuts.length, "Artist addresses and cuts don't match");
             uint256 sum = 0;
@@ -86,7 +91,7 @@ contract MusicRoyaltyContract {
                 sum += _artistCuts[i];
             }
             require(sum == 100, "Percentage cuts don't add up to 100%");
-            musicDirectory[count] = Music(count, musicName,address(0), 0, 0, artistName, msg.sender, _artistAddresses, _artistCuts);
+            musicDirectory[count] = Music(count, musicName, address(0), 0, 0, artistName, msg.sender, _artistAddresses, _artistCuts, musicURI);
             count++;
     }
  
@@ -99,7 +104,7 @@ contract MusicRoyaltyContract {
         require(num > 0, "Invalid number of licenses to generate");
         MusicLicense license;
         if (musicDirectory[index]._nftAddress == address(0)){
-            MusicLicense musicLicense = new MusicLicense();
+            MusicLicense musicLicense = new MusicLicense(musicDirectory[index]._musicName, musicDirectory[index]._musicURI);
             musicDirectory[index]._nftAddress = address(musicLicense);
         }
         license = MusicLicense(musicDirectory[index]._nftAddress);
