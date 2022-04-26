@@ -55,7 +55,6 @@ contract MusicRoyaltyContract {
     uint256 public count = 0; // Count of Songs
     mapping(uint256 => Music) public musicDirectory;
     mapping(address => uint256) public balances; // Store current balances for each artist which can be claimed later
-    mapping(string => string[]) public donators; // List of donators
     mapping(address => mapping(uint256 => uint256[])) public buyersToMusicLicenses; // mapping for a buyer's address to the music licenses tokenIds they possess
     
     // So that some ether can be paid initially to cover gas costs.
@@ -123,14 +122,8 @@ contract MusicRoyaltyContract {
         require(_index < count , "Music index not present");
         return buyersToMusicLicenses[msg.sender][_index];
     }
-    // A event for user to know about the purchase
-    event Purchase(
-        address indexed _buyer,
-        uint256 _amount
-    );
  
-      // function for a user to buy a license NFT after paying appropriate royalties(>0.1ETH)
- 
+    // function for a user to buy a license NFT after paying appropriate royalties(>0.1ETH)
    function buyLicense(uint256 index) payable public {
         require(index < count, "Index out of bounds");
         require(msg.value >= 0.1 * 10**18 , "Must send at least 0.1 ETH");
@@ -144,16 +137,7 @@ contract MusicRoyaltyContract {
         for (uint256 i=0; i<musicDirectory[index]._artistCuts.length; i++) {
             balances[musicDirectory[index]._artistAddresses[i]] += musicDirectory[index]._artistCuts[i] * msg.value / 100;
         }
-        // Shows the address of buyer and amount
-        emit Purchase(msg.sender, msg.value);
    }
-    // Allows a user to donate to his favorite artist without any return.
-    function donate(uint256 index, string memory Name) public payable {
-        require(msg.value > 0, "Donated amount can't be zero or negative");
-        require(index < count, "Index out of bounds");
-        balances[musicDirectory[index]._artist] += msg.value;
-        donators[musicDirectory[index]._artistName].push(Name);
-    }
  
     // Allows an artist to claim their royalties
     function claimRoyalties() public {
