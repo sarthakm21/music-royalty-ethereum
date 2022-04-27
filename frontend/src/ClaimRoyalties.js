@@ -33,8 +33,12 @@ const Claimroyalties = () => {
     await claimRoyalties();
   };
   return (
-    <div>
-      <button onClick={handleSubmit}>Claim</button>
+    <div className="body">
+      <div className="claim__container">
+        <button className="input button" onClick={handleSubmit}>
+          Claim
+        </button>
+      </div>
     </div>
   );
 };
