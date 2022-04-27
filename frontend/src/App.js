@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 import RegisterMusic from "./RegisterMusic";
 import BuyMusic from "./BuyMusic";
-import Navbar from "./Navbar";
 import Home from "./Home";
 import ClaimRoyalties from "./ClaimRoyalties";
 import Login from "./Login";
