@@ -17,8 +17,8 @@ const Registermusic = () => {
     artistCuts,
     musicURL,
   }) => {
-    const CONTRACT_ADDRESS = "0xC3194cc16fE72b79B6a871036911F66265816f1b";
-
+    const CONTRACT_ADDRESS = "0x4d5a4346A9EC3A95e67CA3504539651745e2c8aA";
+    
     try {
       const { ethereum } = window;
 
@@ -39,7 +39,7 @@ const Registermusic = () => {
           musicURL
         );
         await nftTxn.wait();
-        alert("registered the music");
+        alert("Registered the music");
       } else {
         console.log("Ethereum object doesn't exist!");
       }

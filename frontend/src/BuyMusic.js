@@ -14,7 +14,7 @@ const Buymusic = () => {
   ));
 
   const buyMusic = async (index) => {
-    const CONTRACT_ADDRESS = "0xC3194cc16fE72b79B6a871036911F66265816f1b";
+    const CONTRACT_ADDRESS = "0x4d5a4346A9EC3A95e67CA3504539651745e2c8aA";
 
     try {
       const { ethereum } = window;
@@ -28,7 +28,8 @@ const Buymusic = () => {
           signer
         );
         console.log("run");
-        let nftTxn = await connectedContract.buyLicense(index);
+        const options = {value: ethers.utils.parseEther("0.1")}
+        let nftTxn = await connectedContract.buyLicense(index, options);
         await nftTxn.wait();
         alert("Bought the music");
       } else {
@@ -51,7 +52,7 @@ const Buymusic = () => {
   };
 
   useEffect(async () => {
-    const CONTRACT_ADDRESS = "0xC3194cc16fE72b79B6a871036911F66265816f1b";
+    const CONTRACT_ADDRESS = "0x4d5a4346A9EC3A95e67CA3504539651745e2c8aA";
 
     const { ethereum } = window;
 
