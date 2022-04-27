@@ -1,23 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/buymusic.css";
 import { ethers } from "ethers";
 import abi from "./utils/contract.json";
 
 const Buymusic = () => {
-  let music = [
-    {
-      index: 10,
-      musicName: "Sham",
-      artistName: "Amit Trivedi",
-    },
-    {
-      index: 20,
-      musicName: "Killshot",
-      artistName: "Eminem",
-    },
-  ];
-
-  const [buySong, setBuySong] = useState(music[0].index);
+  const [music, setMusic] = useState([]);
+  const [buySong, setBuySong] = useState(0);
 
   let dropdowns = music.map((song, key) => (
     <option key={key} value={song.index}>
@@ -61,6 +49,38 @@ const Buymusic = () => {
     e.preventDefault();
     await buyMusic(buySong);
   };
+
+  useEffect(async () => {
+    const CONTRACT_ADDRESS = "0xC3194cc16fE72b79B6a871036911F66265816f1b";
+
+    const { ethereum } = window;
+
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        abi.abi,
+        signer
+      );
+      console.log("run");
+      let count = await connectedContract.count();
+      count = count.toString();
+      let musicArray = [],
+        i;
+      for (i = 0; i < count; i++) {
+        let music = await connectedContract.musicDirectory(i);
+        musicArray.push({
+          index: i,
+          musicName: music._musicName,
+          artistName: music._artistName,
+        });
+      }
+      setMusic(musicArray);
+    } else {
+      console.log("Ethereum object doesn't exist!");
+    }
+  }, []);
 
   return (
     <div className="body">
