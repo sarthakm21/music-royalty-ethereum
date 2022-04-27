@@ -1,6 +1,7 @@
 import React from "react";
 import { ethers } from "ethers";
 import abi from "./utils/contract.json";
+import MusicLogo from "./assets/music.svg";
 
 const Claimroyalties = () => {
   const claimRoyalties = async () => {
@@ -32,11 +33,20 @@ const Claimroyalties = () => {
   const handleSubmit = async (e) => {
     await claimRoyalties();
   };
+
+  const elemStyle = {
+    position: "absolute",
+    left: "50%",
+    top: "20%",
+    width: "200px",
+    transform: "translateX(-45%)",
+  };
   return (
     <div className="body">
+      <img src={MusicLogo} style={elemStyle} alt="music" />
       <div className="claim__container">
         <button className="input button" onClick={handleSubmit}>
-          Claim
+          Claim Royalties
         </button>
       </div>
     </div>
