@@ -6,6 +6,7 @@ import BuyMusic from "./BuyMusic";
 import Home from "./Home";
 import ClaimRoyalties from "./ClaimRoyalties";
 import Login from "./Login";
+import YourSongs from "./YourSongs";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="register" element={<RegisterMusic />} />
           <Route path="buy" element={<BuyMusic />} />
           <Route path="claim" element={<ClaimRoyalties />} />
+          <Route path="songs" element={<YourSongs />} />
         </Routes>
       </BrowserRouter>
     </>

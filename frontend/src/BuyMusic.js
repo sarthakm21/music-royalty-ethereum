@@ -18,6 +18,9 @@ const Buymusic = () => {
   ];
 
   const [buySong, setBuySong] = useState(music[0].index);
+  const [songName, setSongName] = useState(
+    `${music[0].musicName} by ${music[0].artistName}`
+  );
 
   let dropdowns = music.map((song, key) => (
     <option key={key} value={song.index}>
@@ -53,12 +56,23 @@ const Buymusic = () => {
   };
 
   const handleChange = (e) => {
+    const { options, selectedIndex } = e.target;
+    const text = options[selectedIndex].text;
+    setSongName(text);
     const index = Number(e.target.value);
     setBuySong(index);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let localSongs = JSON.parse(localStorage.getItem("yourSongs"));
+    if (localSongs) {
+      localSongs.push(songName);
+    } else {
+      localSongs = [songName];
+    }
+
+    localStorage.setItem("yourSongs", JSON.stringify(localSongs));
     await buyMusic(buySong);
   };
 

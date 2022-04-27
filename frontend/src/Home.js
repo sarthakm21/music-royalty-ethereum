@@ -239,6 +239,11 @@ const Home = () => {
                   CLAIM ROYALTIES
                 </Typography>
               </Link>
+              <Link to="/songs" id="nav-item" className={classes.linkTag}>
+                <Typography className={classes.headingText}>
+                  YOUR SONGS
+                </Typography>
+              </Link>
             </div>
           </div>
         </Grid>
