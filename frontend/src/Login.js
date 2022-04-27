@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import MusicLogo from "./assets/music.svg";
 
 const Login = () => {
   const history = useNavigate();
@@ -17,8 +18,8 @@ const Login = () => {
 
     if (accounts.length !== 0) {
       const account = accounts[0];
-      localStorage.setItem('account', account);
-      history("/home")
+      localStorage.setItem("account", account);
+      history("/home");
     } else {
       console.log("No authorized account found");
     }
@@ -38,8 +39,8 @@ const Login = () => {
       });
 
       console.log("Connected", accounts[0]);
-      localStorage.setItem('account', accounts[0]);
-      history("/home")
+      localStorage.setItem("account", accounts[0]);
+      history("/home");
     } catch (error) {
       console.log(error);
     }
@@ -49,9 +50,21 @@ const Login = () => {
     checkIfWalletIsConnected();
   }, []);
 
+  const elemStyle = {
+    position: "absolute",
+    left: "50%",
+    top: "20%",
+    width: "200px",
+    transform: "translateX(-45%)",
+  };
   return (
-    <div>
-      <button onClick={connectWallet}>Login with MetaMask</button>
+    <div className="body">
+      <img src={MusicLogo} style={elemStyle} alt="music" />
+      <div className="claim__container">
+        <button className="input button" onClick={connectWallet}>
+          Login with MetaMask
+        </button>
+      </div>
     </div>
   );
 };
