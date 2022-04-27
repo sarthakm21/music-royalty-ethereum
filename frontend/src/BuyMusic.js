@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/buymusic.css";
 
 const Buymusic = () => {
   let music = [
@@ -32,13 +33,25 @@ const Buymusic = () => {
   };
 
   return (
-    <form>
-      <div>
-        <label>Select the song to buy: </label>
-        <select onChange={handleChange}>{dropdowns}</select>
-        <input type="submit" onClick={handleSubmit} />
+    <div className="body">
+      <div className="iphone">
+        <form className="form">
+          <div className="x">
+            <h3>Select the song to buy</h3>
+            <select className="input" onChange={handleChange}>
+              {dropdowns}
+            </select>
+          </div>
+          <div>
+            <input
+              className="input button"
+              type="submit"
+              onClick={handleSubmit}
+            />
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 };
 

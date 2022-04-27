@@ -123,18 +123,4 @@
     background-position: 0% 50%;
   }
 }
-
-form {
-  margin: 30px auto;
-}
-form div {
-  margin: 20px auto;
-  width: 60%;
-  display: flex;
-  justify-content: space-between;
-}
-
-input {
-  padding: 5px;
-}
   

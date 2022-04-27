@@ -1,0 +1,72 @@
+    :root {
+    --color-background: #fae3ea;
+    --color-primary: #fc8080;
+  }
+  
+  .body {
+    display: grid;
+    line-height: 1.5;
+    margin: 0;
+    min-block-size: 95vh;
+    padding-top: 2vmin;
+    place-items: center;
+  }
+  
+  .input {
+    box-sizing: border-box;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: #eff0f0;
+    color: #748194;
+    font-size: 14px;
+    border: 0;
+    padding: 15px;
+    color: inherit;
+    font: inherit;
+  }
+  
+  .button {
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    padding-block: 0.75em;
+    padding-inline: 1em;
+    transition: 0.3s;
+  }
+  
+  .button:focus,
+  .button:hover {
+      cursor: pointer;
+    background-color: #e96363;
+  }
+  
+  .card {
+    border-radius: 1em;
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 1em;
+  }
+
+  .form {
+    padding: 40px 50px;
+    display: grid;
+    gap:1.5em;
+  }
+  
+  .iphone {
+    background-color: #fbf6f7;
+    background-image: linear-gradient(to bottom, #fbf6f7, #fff);
+    border-radius: 2em;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+    inline-size: 500px;
+    overflow: auto;
+    padding: 30px 10px;
+  }
+  

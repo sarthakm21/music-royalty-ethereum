@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/registermusic.css";
 
 const Registermusic = () => {
   const [musicName, setMusicName] = useState("");
@@ -25,51 +26,64 @@ const Registermusic = () => {
   };
 
   return (
-    <form>
-      <div>
-        <label>Song title: </label>
-        <input
-          type="text"
-          value={musicName}
-          onChange={(e) => setMusicName(e.target.value)}
-        />
+    <div className="body">
+      <div className="iphone">
+        <form className="form">
+          <div>
+            <input
+              className="input"
+              placeholder="Song title"
+              type="text"
+              value={musicName}
+              onChange={(e) => setMusicName(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              className="input"
+              placeholder="Artist name"
+              type="text"
+              value={artistName}
+              onChange={(e) => setArtistName(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              className="input"
+              placeholder="Artist Addresses (space seperated)"
+              type="text"
+              value={artistAddresses}
+              onChange={(e) => setArtistAddresses(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              className="input"
+              placeholder="Artist Cuts (space seperated)"
+              type="text"
+              value={artistCuts}
+              onChange={(e) => setArtistCuts(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              className="input"
+              placeholder="Music URL"
+              type="text"
+              value={musicURL}
+              onChange={(e) => setMusicURL(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="submit"
+              className="input button"
+              onClick={handleSubmit}
+            />
+          </div>
+        </form>
       </div>
-      <div>
-        <label>Artist Name: </label>
-        <input
-          type="text"
-          value={artistName}
-          onChange={(e) => setArtistName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Artist Addresses (space seperated): </label>
-        <input
-          type="text"
-          value={artistAddresses}
-          onChange={(e) => setArtistAddresses(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Artist Cuts (space seperated): </label>
-        <input
-          type="text"
-          value={artistCuts}
-          onChange={(e) => setArtistCuts(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Music URL: </label>
-        <input
-          type="text"
-          value={musicURL}
-          onChange={(e) => setMusicURL(e.target.value)}
-        />
-      </div>
-      <div>
-        <input type="submit" onClick={handleSubmit} />
-      </div>
-    </form>
+    </div>
   );
 };
 
